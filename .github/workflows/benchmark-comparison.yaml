@@ -23,7 +23,7 @@ jobs:
         run: |
           cd _benchmark/go
 
-          go test -bench . -benchmem -run '^$' -count 5 | tee benchmark.out
+          go test -bench . -benchmem -run '^$' | tee benchmark.out
           {
             echo '```text'
             cat benchmark.out

@@ -48,7 +48,7 @@ jobs:
 
             pushd "_benchmark/comparison/$version"
 
-            go test -bench . -benchmem -run '^$' -count 5 | tee benchmark.out
+            go test -bench . -benchmem -run '^$' -count 10 | tee benchmark.out
             {
               echo "## $version"
               echo

@@ -22,8 +22,8 @@ jobs:
       - name: Benchmark
         run: |
           cd _benchmark
-          go test -bench . -benchmem -run '^$' -count 5 | tee benchmark.out
 
+          go test -bench . -benchmem -run '^$' -count 5 | tee benchmark.out
           {
             echo '```text'
             cat benchmark.out
@@ -46,9 +46,9 @@ jobs:
           run_benchmark() {
             local version="$1"
 
-            cd "_benchmark/comparison/$version"
-            go test -bench . -benchmem -run '^$' -count 5 | tee benchmark.out
+            pushd "_benchmark/comparison/$version"
 
+            go test -bench . -benchmem -run '^$' -count 5 | tee benchmark.out
             {
               echo "## $version"
               echo
@@ -57,6 +57,8 @@ jobs:
               echo '```'
               echo
             } >> "$GITHUB_STEP_SUMMARY"
+
+            popd
           }
 
           echo "Go version: ${{ steps.setup-go.outputs.go-version }}" \

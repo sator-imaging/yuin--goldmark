@@ -44,8 +44,10 @@ jobs:
         run: |
           run_benchmark() {
             local version="$1"
+            local package="$2"
 
             pushd "_benchmark/comparison/$version"
+            go get "$package@latest"
 
             go test -bench . -benchmem -run '^$' -count 10 | tee benchmark.out
             {
@@ -63,5 +65,5 @@ jobs:
           echo "Go version: ${{ steps.setup-go.outputs.go-version }}" \
             >> "$GITHUB_STEP_SUMMARY"
 
-          run_benchmark v2
-          run_benchmark v1
+          run_benchmark v2 "github.com/yuin/goldmark/v2"
+          run_benchmark v1 "github.com/yuin/goldmark"

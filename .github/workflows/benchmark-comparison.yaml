@@ -21,7 +21,7 @@ jobs:
 
       - name: Benchmark
         run: |
-          cd _benchmark
+          cd _benchmark/go
 
           go test -bench . -benchmem -run '^$' -count 5 | tee benchmark.out
           {

@@ -8,36 +8,38 @@ permissions:
   contents: read
 
 jobs:
-  benchmark:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        target:
-          - name: goldmark v1.8.5
-            dir: _benchmark/comparison/v1
-          - name: goldmark v2.0.0
-            dir: _benchmark/comparison/v2
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
 
-      - name: Install Go
-        uses: actions/setup-go@v5
+  compare:
+    # Don't use matrix due to the runner spec cannot be chosen.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        id: setup-go
         with:
-          go-version: 1.25.x
+          go-version: 1.27.x
+          check-latest: true
 
       - name: Run benchmark
         run: |
-          cd "${{ matrix.target.dir }}"
-          go test -bench . -benchmem -run '^$' -count 5 | tee benchmark.out
+          run_benchmark() {
+            local version="$1"
 
-      - name: Publish benchmark summary
-        run: |
-          {
-            echo "### ${{ matrix.target.name }}"
-            echo
-            echo '```text'
-            cat "${{ matrix.target.dir }}/benchmark.out"
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
+            cd "_benchmark/comparison/$version"
+            go test -bench . -benchmem -run '^$' -count 5 | tee benchmark.out
+
+            {
+              echo "## $version"
+              echo
+              echo '```text'
+              cat benchmark.out
+              echo '```'
+              echo
+            } >> "$GITHUB_STEP_SUMMARY"
+          }
+
+          echo "Go version: ${{ steps.setup-go.outputs.go-version }}" \
+            >> "$GITHUB_STEP_SUMMARY"
+
+          run_benchmark v2
+          run_benchmark v1

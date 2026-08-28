@@ -102,7 +102,7 @@ jobs:
                 printf "* Min:     %s\n", comma(ns[1])
                 printf "* Max:     %s\n", comma(ns[n])
                 printf "* Median:  %s\n", comma(ns_median)
-                printf "* Average: %s\n\n", comma(ns_sum / n)
+                printf "* Average: %s\n", comma(ns_sum / n)
                 printf "\n"
                 printf "B/op\n"
                 printf "* Min:     %s\n", comma(bytes[1])
@@ -127,8 +127,10 @@ jobs:
             popd
           }
 
-          echo "Go version: ${{ steps.setup-go.outputs.go-version }}" \
-            >> "$GITHUB_STEP_SUMMARY"
+          {
+            echo "Go version: ${{ steps.setup-go.outputs.go-version }}" \
+            echo
+          } >> "$GITHUB_STEP_SUMMARY"
 
           run_benchmark v2 "github.com/yuin/goldmark/v2"
           run_benchmark v1 "github.com/yuin/goldmark"

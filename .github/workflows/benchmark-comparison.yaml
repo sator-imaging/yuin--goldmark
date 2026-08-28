@@ -128,7 +128,7 @@ jobs:
           }
 
           {
-            echo "Go version: ${{ steps.setup-go.outputs.go-version }}" \
+            echo "Go version: ${{ steps.setup-go.outputs.go-version }}"
             echo
           } >> "$GITHUB_STEP_SUMMARY"
 

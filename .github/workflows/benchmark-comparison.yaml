@@ -1,7 +1,6 @@
 name: benchmark-comparison
 
 on:
-  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -114,7 +113,7 @@ jobs:
                 printf "* Average: %s\n", comma(bytes_sum / n)
                 printf "\n"
               }
-              ' benchmark.out
+              ' benchmark.out >> "$GITHUB_STEP_SUMMARY"
 
             {
               echo '```text'

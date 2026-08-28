@@ -98,8 +98,6 @@ jobs:
                 else
                   bytes_median = (bytes[n / 2] + bytes[n / 2 + 1]) / 2
 
-                printf "Samples: %d\n\n", n
-
                 printf "ns/op\n"
                 printf "* Min:     %s\n", comma(ns[1])
                 printf "* Max:     %s\n", comma(ns[n])
@@ -116,9 +114,13 @@ jobs:
               ' benchmark.out >> "$GITHUB_STEP_SUMMARY"
 
             {
+              echo '<details>'
+              echo
               echo '```text'
               cat benchmark.out
               echo '```'
+              echo
+              echo '</details>'
               echo
             } >> "$GITHUB_STEP_SUMMARY"
 

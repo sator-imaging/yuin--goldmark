@@ -107,10 +107,10 @@ jobs:
                 printf " | %s", comma(ns[n])
                 printf " |\n"
                 printf "| B/op"
-                printf " | %s\n", comma(bytes_median)
-                printf " | %s\n", comma(bytes_sum / n)
-                printf " | %s\n", comma(bytes[1])
-                printf " | %s\n", comma(bytes[n])
+                printf " | %s", comma(bytes_median)
+                printf " | %s", comma(bytes_sum / n)
+                printf " | %s", comma(bytes[1])
+                printf " | %s", comma(bytes[n])
                 printf " |\n"
                 printf "\n"
               }

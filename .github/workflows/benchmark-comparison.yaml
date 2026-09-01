@@ -59,8 +59,9 @@ jobs:
 
               # ns/op
               /^Benchmark/ {
-                ns[++n] = $3
-                bytes[++n] = $5
+                ++n
+                ns[n] = $3
+                bytes[n] = $5
                 allocs[n] = $7
               }
 

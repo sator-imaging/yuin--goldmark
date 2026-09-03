@@ -32,7 +32,7 @@ jobs:
             pushd "_benchmark/comparison/$version"
             {
               echo '$' go get "$package@latest"
-              go get "$package@latest"
+              go get "$package@latest" 2>&1
               echo
               go test -bench . -benchmem -run '^$' -count 10
             } \
